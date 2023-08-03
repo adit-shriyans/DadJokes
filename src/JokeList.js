@@ -40,7 +40,7 @@ class JokeList extends Component {
       this.setState(
         st => ({
           loading: false,
-          jokes: [...st.jokes, ...jokes]
+          jokes: [...jokes]
         }),
         () =>
           window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
@@ -63,6 +63,7 @@ class JokeList extends Component {
   }
   handleClick() {
     this.setState({ loading: true }, this.getJokes);
+    localStorage.clear();
   }
   render() {
     if (this.state.loading) {
@@ -87,7 +88,7 @@ class JokeList extends Component {
         </div>
 
         <div className='JokeList-jokes'>
-          {jokes.map(j => (
+          {this.state.jokes.map(j => (
             <Joke
               key={j.id}
               votes={j.votes}
